@@ -1,0 +1,17 @@
+{
+  "name": "ledcube-webgl",
+  "version": "0.0.1",
+  "description": "WebGL simulator for LED cube",
+  "main": "viewer.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Silcock",
+  "license": "GPLv3",
+  "dependencies": {
+    "express": "~4.6.1",
+    "ejs": "~1.0.0",
+    "socket.io": "~1.0.6"
+  }
+}
