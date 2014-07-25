@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var socketio = require('socket.io');
 var path = require('path');
+var SERIAL_TCP_PORT = 8124;
 
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 3000);
@@ -9,7 +10,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 var server = app.listen(app.get('port'), function() {
-    console.log('Listening on port %d', server.address().port);
+    console.log('Web server listening on port %d', server.address().port);
     console.log('This can currently only handle the maxi cube (8x8x8) due to the unmaxicube_map function');
 });
 
@@ -44,10 +45,10 @@ function sendToClients(message, data) {
 var net = require('net');
 var tcpserver = net.createServer(function(socket) {
     // Python cube simulator connected
-    console.log('server connected');
+    console.log('Serial-over-TCP connected');
     socket.write(new Buffer([0xFE, 0x4C, 0x45, 0x44])); // 0xFE is a magic initialisation command. 0x4C, 0x45, 0x44 is ASCII "LED"
     socket.on('end', function() {
-        console.log('server disconnected');
+        console.log('Serial-over-TCP disconnected');
     });
     socket.on('data', function(d) {
         // Incoming data is a byte stream, where a "packet" is 4 bytes of data.
@@ -58,9 +59,9 @@ var tcpserver = net.createServer(function(socket) {
     });
 });
 
-tcpserver.listen(8124, function() { //'listening' listener
+tcpserver.listen(SERIAL_TCP_PORT, function() { //'listening' listener
     // Server started listening
-    console.log('server listening');
+    console.log('Serial-over-TCP server listening on port %d', SERIAL_TCP_PORT);
 });
 
 
@@ -88,6 +89,11 @@ function handleMessage(cmd, d0, d1, d2) {
             currentBoard = d0;
             break;
 
+        case 0xc0:
+            // set brightness
+            console.log('Ignoring set brightness command');
+            break;
+
         case 0x80:
             // flip
             // console.log('flip');
@@ -112,7 +118,7 @@ function handleMessage(cmd, d0, d1, d2) {
                 }
             } else {
                 // something else we hopefully can just ignore
-                console.log('not handling ' + cmd);
+                console.log('Unknown command ' + cmd + ' - ignoring');
             }
             break;
     }
