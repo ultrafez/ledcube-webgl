@@ -68,8 +68,7 @@ Cube.prototype._setupScene = function() {
 }
 
 Cube.prototype._render = function() {
-    // this.controls.rotateLeft(0.005);
-    // this.controls.update();
+    this.controls.update();
 
     requestAnimationFrame(this._render.bind(this));
     this.renderer.render(this.scene, this.camera);
