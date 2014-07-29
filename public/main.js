@@ -1,4 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
-	var display = new Cube(8, document.getElementById('canvas-container'), window);
-	var ws = new Net(display);
+    var stats = new Stats();
+    var container = document.getElementById('canvas-container');
+    var display = new Cube(8, container, window, stats);
+    var ws = new Net(display);
+
+    container.appendChild(stats.domElement);
 });

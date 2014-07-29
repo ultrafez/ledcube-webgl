@@ -10,9 +10,10 @@ var BASE_COLOR_HEX = 0x4C4C4C;
  * @param int size The number of lights to have in each dimension of the cube.
  * @param DOMNode containerElem A DOM element that will contain the <canvas> used to render the simulation
  */
-var Cube = function(size, containerElem, theWindow) {
+var Cube = function(size, containerElem, theWindow, stats) {
     this.size = size;
     this.container = containerElem;
+    this.stats = stats;
 
     this.nodes = [];
     for (x=0; x<size; x++) {
@@ -72,6 +73,10 @@ Cube.prototype._render = function() {
 
     requestAnimationFrame(this._render.bind(this));
     this.renderer.render(this.scene, this.camera);
+
+    if (this.stats) {
+        this.stats.update();
+    }
 }
 
 /**
