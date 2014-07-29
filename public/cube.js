@@ -24,7 +24,7 @@ var Cube = function(size, containerElem, theWindow) {
 
     this._setupScene();
 
-    var geometry = new THREE.BoxGeometry(NODE_WIDTH, NODE_WIDTH, NODE_WIDTH);
+    var geometry = new THREE.SphereGeometry(NODE_WIDTH, 6, 6);
 
     for (x=0; x<size; x++) {
         for (y=0; y<size; y++) {
