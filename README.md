@@ -10,7 +10,7 @@ Run `node viewer.js`. It will begin listening for connections from the Python cu
 
 ## How it works
 
-Originally, the Python code exclusively communicated with the physical LED cube over a serial connection, but later a serial-over-TCP connection method was added so that the Python code could communicate with the physical cube over a network connection. This project simulates a physical LED cube, so it interprets the same serial protocol that was intended to power the physical LED cube. The Node.js process translates hardware-focussed messages received over TCP into messages that are more appropriate for software, which are sent over a Socket.io connection to connected browsers.
+Originally, the Python code exclusively communicated with the physical LED cube over a serial connection, but later a serial-over-TCP connection method was added so that the Python code could communicate with the physical cube over a network connection. This project simulates a physical LED cube, so it interprets the same serial protocol that was intended to power the physical LED cube. The Node.js process translates hardware-focussed messages (set pixel: board and offset, rgb colour) received over TCP into messages that are more appropriate for software (set pixel: xyz coordinates, rgb colour), which are sent over a Socket.io connection to connected browsers.
 
 When the browser receives the messages over Socket.io, it handles graphics features such as double-buffering before displaying the coloured pixels on an LED cube simulated by Three.js.
 
