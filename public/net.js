@@ -25,7 +25,7 @@ var Net = function(simulator) {
         console.log('Socket.io disconnected');
     });
 
-    this.socket.on('p', function (data /* x, y, z, r, g, b*/) {
+    function pixel(data) {
         // Set a pixel to a certain colour
 
         // If the write page is the same as the display page, then we need to show the changes on the cube immediately
@@ -34,12 +34,12 @@ var Net = function(simulator) {
         }
 
         this.pages[this.writePage][data[0]][data[1]][data[2]] = [data[3], data[4], data[5]];
-    }.bind(this));
-
-    this.socket.on('f', function (data /* displayPage, writePage */) {
+    }
+    
+    function flip(displayPage, writePage) {
         // Set the page to be used for displaying, and the page for writing
-        this.displayPage = data[0];
-        this.writePage = data[1];
+        this.displayPage = displayPage;
+        this.writePage = writePage;
         
         // Set the pixel colors for each of the pixels on the 'display' page
         for (var x=0; x<this.pages[this.displayPage].length; x++) {
@@ -50,5 +50,21 @@ var Net = function(simulator) {
                 }
             }
         }
-    }.bind(this));
+    }
+
+    function handleReceivedBuffer(data) {
+        data.forEach(function (message) {
+            switch (message[0]) {
+                case 'f':
+                    flip.call(this, message[1][0], message[1][1]);
+                    break;
+
+                case 'p':
+                    pixel.call(this, message[1]);
+                    break;
+            }
+        }.bind(this));
+    }
+
+    this.socket.on('data', handleReceivedBuffer.bind(this));
 }

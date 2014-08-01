@@ -32,8 +32,19 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+
+var buffer = [];
+
+/**
+ * Buffer 16 messages and then send them all in one go.
+ */
 function sendToClients(message, data) {
-    io.sockets.emit(message, data);
+    buffer.push([message, data]);
+
+    if (buffer.length == 16) {
+        io.sockets.emit('data', buffer);
+        buffer = [];
+    }
 }
 
 
