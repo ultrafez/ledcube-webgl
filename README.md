@@ -6,7 +6,7 @@ This is a Node.js and WebGL-based simulator for the [LED cube code](https://gith
 
 Dependencies: Node.js v0.10, a decent CPU and GPU (as it's not very well optimised)
 
-Run `node viewer.js`. It will begin listening for connections from the Python cube code on port 8124, and it will listen for connections from a browser on port 3000. Run the Python code and connect from your browser (tested in Chrome) in whatever order you prefer.
+Run `node viewer.js`. It will begin listening for connections from the Python cube code on port 3000, and it will listen for connections from a browser on port 8124. Run the Python code and connect from your browser (tested in Chrome) in whatever order you prefer.
 
 ## How it works
 
