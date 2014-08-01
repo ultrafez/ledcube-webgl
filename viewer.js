@@ -2,10 +2,11 @@ var express = require('express');
 var app = express();
 var socketio = require('socket.io');
 var path = require('path');
-var SERIAL_TCP_PORT = 8124;
+var SERIAL_TCP_PORT = 3000;
+var WEB_PORT = 8124;
 
 app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || WEB_PORT);
 app.use(express.static(__dirname + '/public'));
 
 
