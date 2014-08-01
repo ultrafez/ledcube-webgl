@@ -8,9 +8,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Setup controls
     var CubeControls = function() {
-    	this.showFpsMeter = true;
-    	this.autoRotate = false;
-    	this.rotateSpeed = 2.0;
+        this.showFpsMeter = true;
+        this.autoRotate = false;
+        this.rotateSpeed = 2.0;
     }
 
     var controls = new CubeControls();
@@ -20,14 +20,14 @@ window.addEventListener('DOMContentLoaded', function() {
     var rotateSpeed = gui.add(controls, 'rotateSpeed', 0, 10);
 
     showFpsMeter.onChange(function (value) {
-    	stats.domElement.style.display = value ? 'block' : 'none';
+        stats.domElement.style.display = value ? 'block' : 'none';
     });
 
     autoRotate.onChange(function (value) {
-    	display.controls.autoRotate = value;
+        display.controls.autoRotate = value;
     });
 
     rotateSpeed.onChange(function (value) {
-    	display.controls.autoRotateSpeed = value;
+        display.controls.autoRotateSpeed = value;
     });
 });
