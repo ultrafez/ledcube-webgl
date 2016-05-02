@@ -2,6 +2,10 @@
 
 This is a Node.js and WebGL-based simulator for the [LED cube code](https://github.com/pbrook/pycubedemo) by pbrook. It is in no way well-engineered and was thrown together in a hurry, so please don't judge!
 
+This is what it looks like:
+
+![Screenshot of the simulator running in Chrome](docs/screenshot.png "Screenshot of the simulator running in Chrome")
+
 ## How to run it
 
 Dependencies: Node.js v0.10, a decent CPU and GPU (as it's not very well optimised)
