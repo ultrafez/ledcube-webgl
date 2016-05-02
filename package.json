@@ -5,7 +5,8 @@
   "main": "viewer.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node viewer.js"
   },
   "author": "Alex Silcock",
   "license": "GPLv3",
