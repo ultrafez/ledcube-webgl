@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 var server = app.listen(app.get('port'), function() {
-    console.log('Web server listening on port %d', server.address().port);
+    console.log('[Web] server listening on port %d', server.address().port);
     console.log('This can currently only handle the maxi cube (8x8x8) due to the unmaxicube_map function');
 });
 
@@ -19,10 +19,10 @@ var server = app.listen(app.get('port'), function() {
 var io = socketio.listen(server);
 
 io.sockets.on('connection', function (socket) {
-    console.log('Socket.io connected');
+    console.log('[Web] Socket.io connected');
 
     socket.on('disconnect', function () {
-        console.log('Socket.io disconnected');
+        console.log('[Web] Socket.io disconnected');
     });
 });
 
@@ -39,10 +39,13 @@ function sendToClients(message, data) {
 var net = require('net');
 var tcpserver = net.createServer(function(socket) {
     // Python cube simulator connected
-    console.log('Serial-over-TCP connected');
+    console.log('[Cube] connected');
     socket.write(Buffer.from([0xFE, 0x4C, 0x45, 0x44])); // 0xFE is a magic initialisation command. 0x4C, 0x45, 0x44 is ASCII "LED"
     socket.on('end', function() {
-        console.log('Serial-over-TCP disconnected');
+        console.log('[Cube] disconnected');
+    });
+    socket.on('error', () => {
+        console.log('[Cube] socket error');
     });
     socket.on('data', function(d) {
         // Incoming data is a byte stream, where a "packet" is 4 bytes of data.
@@ -55,7 +58,7 @@ var tcpserver = net.createServer(function(socket) {
 
 tcpserver.listen(SERIAL_TCP_PORT, function() { //'listening' listener
     // Server started listening
-    console.log('Serial-over-TCP server listening on port %d', SERIAL_TCP_PORT);
+    console.log('[Cube] server listening on port %d', SERIAL_TCP_PORT);
 });
 
 
@@ -68,35 +71,35 @@ function handleMessage(cmd, d0, d1, d2) {
     switch (cmd) {
         case 0xff:
             // bus reset
-            // console.log('bus reset');
+            // console.log('[Cube] bus reset');
             break;
 
         case 0xe0:
             // connect
-            // console.log('connect');
+            // console.log('[Cube] connect');
             break;
 
         case 0xe1:
             // select board
-            // console.log('select board');
+            // console.log('[Cube] select board');
             currentBoard = d0;
             break;
 
         case 0xc0:
             // set brightness
-            console.log('Ignoring set brightness command');
+            console.log('[Cube] Ignoring set brightness command');
             break;
 
         case 0x80:
             // flip
-            // console.log('flip');
+            // console.log('[Cube] flip');
             // d0 unused, d1 display page, d2 write page
             flip(d1, d2);
             break;
 
         default:
             if (cmd <= 0x80) {
-                // console.log('set pixel');
+                // console.log('[Cube] set pixel');
                 // set pixel color
                 // cmd: offset, (d0, d1, d2): (r, g, b)
                 // If currentBoard is 255, this means the pixel should be set on all boards. Therefore we need to know how many boards there are
@@ -111,7 +114,7 @@ function handleMessage(cmd, d0, d1, d2) {
                 }
             } else {
                 // something else we hopefully can just ignore
-                console.log('Unknown command ' + cmd + ' - ignoring');
+                console.log('[Cube] Unknown command ' + cmd + ' - ignoring');
             }
             break;
     }
