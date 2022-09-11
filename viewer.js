@@ -5,7 +5,6 @@ var path = require('path');
 var SERIAL_TCP_PORT = 3000;
 var WEB_PORT = 8124;
 
-app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || WEB_PORT);
 app.use(express.static(__dirname + '/public'));
 
@@ -14,11 +13,6 @@ var server = app.listen(app.get('port'), function() {
     console.log('Web server listening on port %d', server.address().port);
     console.log('This can currently only handle the maxi cube (8x8x8) due to the unmaxicube_map function');
 });
-
-app.get('/', function(req, res) {
-    res.render('index');
-});
-
 
 
 
