@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var socketio = require('socket.io');
-var path = require('path');
 var SERIAL_TCP_PORT = 3000;
 var WEB_PORT = 8124;
 
@@ -41,7 +40,7 @@ var net = require('net');
 var tcpserver = net.createServer(function(socket) {
     // Python cube simulator connected
     console.log('Serial-over-TCP connected');
-    socket.write(new Buffer([0xFE, 0x4C, 0x45, 0x44])); // 0xFE is a magic initialisation command. 0x4C, 0x45, 0x44 is ASCII "LED"
+    socket.write(Buffer.from([0xFE, 0x4C, 0x45, 0x44])); // 0xFE is a magic initialisation command. 0x4C, 0x45, 0x44 is ASCII "LED"
     socket.on('end', function() {
         console.log('Serial-over-TCP disconnected');
     });
@@ -61,7 +60,6 @@ tcpserver.listen(SERIAL_TCP_PORT, function() { //'listening' listener
 
 
 
-var currentPage = 0xff;
 var currentBoard = 0xff;
 var NUM_BOARDS = 4;
 
