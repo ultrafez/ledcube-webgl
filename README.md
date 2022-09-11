@@ -1,6 +1,6 @@
 # LED Cube WebGL Simulator
 
-This is a Node.js and WebGL-based simulator for the [LED cube code](https://github.com/pbrook/pycubedemo) by pbrook. It's incredibly unoptimised, as it was thrown together in a hurry, so it should not be considered representative of my usual standard of work.
+This is a Node.js and WebGL-based simulator for the [LED cube](https://github.com/leedshackspace/pycubedemo) at Leeds Hackspace.
 
 This is what it looks like:
 
@@ -8,7 +8,7 @@ This is what it looks like:
 
 ## How to run it
 
-Dependencies: Node.js >= v0.10 (tested and works in Node 6.0.0), a WebGL-capable browser, and a decent CPU and GPU
+Dependencies: Node.js >= v0.10 (tested and works in Node 6, and Node 16 (Gallium LTS)), a WebGL-capable browser, and a decent CPU and GPU
 
 * `npm install`
 * `npm start`
@@ -32,3 +32,4 @@ Instead of the above, a new output method could be added to the Python code to b
 ## License
 
 GPLv3
+
